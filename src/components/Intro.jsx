@@ -23,7 +23,6 @@ export default function Intro () {
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                     Available for work
                   </div>
-                  <div>Ireland</div>
                 </div>
               </div>
             </div>
