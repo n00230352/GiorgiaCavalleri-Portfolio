@@ -40,7 +40,7 @@ export default function Intro () {
               <div className="space-y-4">
                 <div className="text-sm text-muted-foreground font-mono">FOCUS</div>
                 <div className="flex flex-wrap gap-2">
-                  {['HTML', 'CSS', 'JavaScript', 'React', 'Tailwind CSS'].map((skill) => (
+                  {['HTML', 'CSS'].map((skill) => (
                     <span
                       key={skill}
                       className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"

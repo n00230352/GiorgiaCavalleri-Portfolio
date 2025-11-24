@@ -81,5 +81,20 @@
         "github": "",
         "date": "2025",
         "tags": ["React", "JavaScript", "CSS", "HTML", "APIs"]
+    },
+    {
+        "slug": "StepByStep",
+        "title": "StepByStep",
+        "description": "A simple Tenor Gif application that demonstrates API integration and dynamic content rendering.",
+        "screenshots": [
+            {
+                "url": "https://picsum.photos/seed/gifapp/600/400",
+                "caption": "Screenshot of Gif App"
+            }
+        ],
+        "url": "https://stepbystepg.netlify.app/",
+        "github": "",
+        "date": "2024",
+        "tags": ["Bootstrap"]
     }
 ]
