@@ -1,3 +1,5 @@
+import TextType from "@/components/animations/TextType"
+
 export default function Intro () {
     return(
         <header id="intro" className="min-h-screen flex items-center ">

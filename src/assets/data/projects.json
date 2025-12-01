@@ -88,8 +88,8 @@
         "description": "A simple Tenor Gif application that demonstrates API integration and dynamic content rendering.",
         "screenshots": [
             {
-                "url": "https://picsum.photos/seed/gifapp/600/400",
-                "caption": "Screenshot of Gif App"
+                "url": "images/stepbystep.png",
+                "caption": "Screenshot of StepByStep"
             }
         ],
         "url": "https://stepbystepg.netlify.app/",
