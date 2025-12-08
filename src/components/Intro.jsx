@@ -1,59 +1,67 @@
 import TextType from "@/components/animations/TextType"
+import { Button } from "@/components/ui/button"
 
-export default function Intro () {
-    return(
-        <header id="intro" className="min-h-screen flex items-center ">
-          <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
-            <div className="lg:col-span-3 space-y-6 sm:space-y-8">
-              <div className="space-y-3 sm:space-y-2">
-                <div className="text-sm text-muted-foreground tracking-wider">PORTFOLIO / 2025</div>
-                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
-                  Giorgia <br />
-                  <span className="text-muted-foreground">Cavalleri</span>
-                </h1>
-              </div>
+export default function Intro() {
+  return (
+    <header id="intro" className="min-h-screen flex items-center px-4 sm:px-6 lg:px-8 py-20">
+      <div className="w-full max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
+          {/* Left: Content */}
+          <div className="space-y-10">
+            <div className="space-y-6">
+              <p className="text-sm text-muted-foreground tracking-widest uppercase">
+                Portfolio
+              </p>
 
-              <div className="space-y-6 max-w-md">
-                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                  Frontend Developer crafting digital experiences at the intersection of
-                  <span className="text-foreground"> design</span>,<span className="text-foreground"> technology</span>, and
-                  <span className="text-foreground"> user experience</span>.
-                </p>
+              <h1 className="text-7xl lg:text-8xl font-light leading-tight">
+                Giorgia
+                <br />
+                Cavalleri
+              </h1>
 
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    Available for work
-                  </div>
-                </div>
+              <div className="text-lg text-muted-foreground font-light">
+                <TextType
+                  texts={[
+                    "Frontend Developer",
+                    "UI Designer",
+                    "Based in Dublin",
+                  ]}
+                  showCursor={false}
+                />
               </div>
             </div>
 
-            <div className="lg:col-span-2 flex flex-col justify-end space-y-6 sm:space-y-8 mt-8 lg:mt-0">
-              <div className="space-y-4">
-                <div className="text-sm text-muted-foreground font-mono">CURRENTLY</div>
-                <div className="space-y-2">
-                  <div className="text-foreground">Student</div>
-                  <div className="text-muted-foreground">@ IADT</div>
-                  <div className="text-xs text-muted-foreground">2023 — Present</div>
-                </div>
-              </div>
+            <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+              Creating clean, thoughtful interfaces. Focused on simplicity, design, and user experience.
+            </p>
 
-              <div className="space-y-4">
-                <div className="text-sm text-muted-foreground font-mono">FOCUS</div>
-                <div className="flex flex-wrap gap-2">
-                  {['HTML', 'CSS'].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-3 py-1 text-xs border border-border rounded-full hover:border-muted-foreground/50 transition-colors duration-300"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
+            <div className="flex gap-4 pt-4">
+              <Button asChild size="sm" variant="default">
+                <a href="#projects">Work</a>
+              </Button>
+              <Button asChild size="sm" variant="outline">
+                <a href="#contact">Contact</a>
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs text-muted-foreground pt-6">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              Available for work
             </div>
           </div>
-        </header>
-    )
+
+          {/* Right: Image */}
+          <div className="relative">
+            <div className="aspect-[3/4] rounded-lg overflow-hidden">
+              <img
+                src="images/giorgia.JPG"
+                alt="Giorgia Cavalleri"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  )
 }

@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import projectsJSON from '@/assets/data/projects.json';
 import ProjectCard from '@/components/ProjectCard';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '@/components/ui/carousel';
 
 export default function Projects() {
   const [projects] = useState(projectsJSON);
-
-  const projectCards = projects.map((project) => (
-    <ProjectCard key={project.slug} project={project} />
-  ));
 
     return (
     <section id="projects" className="py-20 sm:py-32 opacity-0">
@@ -18,9 +21,17 @@ export default function Projects() {
             Projects I have worked on.
           </p>
         </div>
-        <div className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {projectCards}
-        </div>
+        <Carousel className="w-full">
+          <CarouselContent>
+            {projects.map((project) => (
+              <CarouselItem key={project.slug} className="md:basis-1/2 lg:basis-1/3">
+                <ProjectCard project={project} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       </div>
     </section>
     )
