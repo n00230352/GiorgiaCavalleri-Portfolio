@@ -1,13 +1,13 @@
 export default function Intro() {
   return (
     <header id="intro" className="min-h-screen flex items-center">
-      <div className="container mx-auto w-full px-6">
+      <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16 w-full">
         <div className="flex flex-col lg:flex-row items-center lg:items-center gap-10">
           {/* Left: image */}
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
             <div className="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 overflow-hidden shadow-lg">
               <img
-                src="/images/giorgia.JPG"
+                src="/images/myself.jpg"
                 alt="Giorgia Cavalleri"
                 className="w-full h-full object-cover"
               />
@@ -21,7 +21,7 @@ export default function Intro() {
                 PORTFOLIO / 2025
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
                 Giorgia Cavalleri
               </h1>
             </div>
