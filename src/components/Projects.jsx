@@ -17,9 +17,6 @@ export default function Projects() {
       <div className="space-y-10">
         <div className="space-y-6 sm:space-y-8 max-w-2xl">
           <h2 className="text-3xl sm:text-4xl font-light">Projects</h2>
-          <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-            Projects I have worked on.
-          </p>
         </div>
         <Carousel className="w-full">
           <CarouselContent>

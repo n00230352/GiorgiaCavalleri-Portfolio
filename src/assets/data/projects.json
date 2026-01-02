@@ -1,91 +1,8 @@
 [
     {
-        "slug": "todo-app",
-        "title": "Todo App",
-        "description": "A simple todo application to manage daily tasks.",
-        "screenshots": [
-            {
-                "url": "https://picsum.photos/seed/todoapp/600/400",
-                "caption": "Screenshot of Todo App"
-            },
-            {
-                "url": "https://picsum.photos/seed/todoapp/600/400",
-                "caption": "Screenshot of Todo App"
-            },
-            {
-                "url": "https://picsum.photos/seed/todoapp/600/400",
-                "caption": "Screenshot of Todo App"
-            }
-        ],
-        "url": "https://example.com/todo-app",
-        "github": "",
-        "date": "2025",
-        "tags": ["React", "JavaScript", "CSS", "HTML"]
-    },
-    {
-        "slug": "gif-app",
-        "title": "Gif App",
-        "description": "A simple Tenor Gif application that demonstrates API integration and dynamic content rendering.",
-        "screenshots": [
-            {
-                "url": "https://picsum.photos/seed/gifapp/600/400",
-                "caption": "Screenshot of Gif App"
-            }
-        ],
-        "url": "https://example.com/gif-app",
-        "github": "",
-        "date": "2025",
-        "tags": ["React", "JavaScript", "CSS", "HTML", "APIs"]
-    },
-    {
-        "slug": "gif-app2",
-        "title": "Gif App",
-        "description": "A simple Tenor Gif application that demonstrates API integration and dynamic content rendering.",
-        "screenshots": [
-            {
-                "url": "https://picsum.photos/seed/gifapp/600/400",
-                "caption": "Screenshot of Gif App"
-            }
-        ],
-        "url": "https://example.com/gif-app",
-        "github": "",
-        "date": "2025",
-        "tags": ["React", "JavaScript", "CSS", "HTML", "APIs"]
-    },
-    {
-        "slug": "gif-app3",
-        "title": "Gif App",
-        "description": "A simple Tenor Gif application that demonstrates API integration and dynamic content rendering.",
-        "screenshots": [
-            {
-                "url": "https://picsum.photos/seed/gifapp/600/400",
-                "caption": "Screenshot of Gif App"
-            }
-        ],
-        "url": "https://example.com/gif-app",
-        "github": "",
-        "date": "2025",
-        "tags": ["React", "JavaScript", "CSS", "HTML", "APIs"]
-    },
-    {
-        "slug": "gif-app4",
-        "title": "Gif App",
-        "description": "A simple Tenor Gif application that demonstrates API integration and dynamic content rendering.",
-        "screenshots": [
-            {
-                "url": "https://picsum.photos/seed/gifapp/600/400",
-                "caption": "Screenshot of Gif App"
-            }
-        ],
-        "url": "https://example.com/gif-app",
-        "github": "",
-        "date": "2025",
-        "tags": ["React", "JavaScript", "CSS", "HTML", "APIs"]
-    },
-    {
         "slug": "StepByStep",
         "title": "StepByStep",
-        "description": "A simple Tenor Gif application that demonstrates API integration and dynamic content rendering.",
+        "description": "Step by Step is a promotional website that presents my UX design project by guiding users through its purpose, features, and design process. Built with Bootstrap and CSS.",
         "screenshots": [
             {
                 "url": "images/stepbystep.png",
@@ -93,8 +10,25 @@
             }
         ],
         "url": "https://stepbystepg.netlify.app/",
-        "github": "",
+        "github": "https://github.com/n00230352/wed_design_framework_CA",
         "date": "2024",
         "tags": ["Bootstrap"]
+    },
+    {
+        "slug": "StepByStep",
+        "title": "StepByStep",
+        "description": "A UX design project for a mobile help-bot app that supports users in their daily lives through a conversational interface. Designed in Figma, with a focus on usability and user experience.",
+        "screenshots": [
+            {
+                "url": "images/stepByStepUx.png",
+                "caption": "Screenshot of screens in StepByStep App"
+            },
+            {
+                "url": "images/stepByStepUx2.png",
+                "caption": "Screenshot of screens in StepByStep App"
+            }
+        ],
+        "github": "",
+        "date": "2024"
     }
 ]
