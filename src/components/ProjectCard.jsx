@@ -49,16 +49,66 @@ export function ProjectCard({ project }) {
 	// show full description on the card (no truncation)
 	const truncate = (str) => str;
 
+	const isVideoFile = (u) => typeof u === "string" && /\.(mp4|webm|ogg)(?:\?.*)?$/i.test(u);
+	const isYouTube = (u) => typeof u === "string" && /(?:youtube\.com|youtu\.be)/i.test(u);
+	const isVimeo = (u) => typeof u === "string" && /vimeo\.com/.test(u);
+
+	const toYouTubeEmbed = (u) => {
+		if (!u) return u;
+		const vid = (u.match(/[?&]v=([A-Za-z0-9_-]{6,})/) || u.match(/youtu\.be\/([A-Za-z0-9_-]{6,})/))?.[1];
+		return vid ? `https://www.youtube.com/embed/${vid}` : u;
+	};
+
+	const renderMedia = (shot, className = "h-full w-full object-cover") => {
+		if (!shot || !shot.url) return null;
+		const raw = shot.url;
+		const src = encodeURI(raw);
+
+		if (isVideoFile(raw)) {
+			return (
+				<video controls preload="metadata" className={className} playsInline>
+					<source src={src} />
+					Your browser does not support the video tag.
+				</video>
+			);
+		}
+
+		if (isYouTube(raw)) {
+			const embed = toYouTubeEmbed(raw);
+			return (
+				<iframe
+					src={embed}
+					title={shot.caption || title}
+					className={className}
+					frameBorder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowFullScreen
+				/>
+			);
+		}
+
+		if (isVimeo(raw)) {
+			const id = raw.split('/').pop();
+			const embed = raw.includes('player.vimeo') ? raw : `https://player.vimeo.com/video/${id}`;
+			return (
+				<iframe src={embed} title={shot.caption || title} className={className} frameBorder="0" allowFullScreen />
+			);
+		}
+
+		// fallback to image
+		return (
+			// eslint-disable-next-line @next/next/no-img-element
+			<img src={src} alt={shot.caption || `${title} screenshot`} loading="lazy" className={className} />
+		);
+	};
+
 	return (
 		<Card className="flex flex-col h-full overflow-hidden rounded-md shadow-sm hover:shadow-lg transition-shadow transform hover:-translate-y-1 p-0 mb-6">
 			<div className="relative aspect-video w-full overflow-hidden rounded-t-md bg-muted">
 				{screenshot?.url ? (
-					<img
-						src={screenshot.url}
-						alt={screenshot.caption || `${title} screenshot`}
-						loading="lazy"
-						className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-					/>
+					<div className="h-full w-full transition-transform duration-300 hover:scale-105">
+						{renderMedia(screenshot, "h-full w-full object-cover")}
+					</div>
 				) : (
 					<div className="h-full w-full flex items-center justify-center bg-gray-100 text-gray-700">
 						<div className="text-center">
@@ -137,15 +187,7 @@ export function ProjectCard({ project }) {
 											{screenshots.map((shot, idx) => (
 												<CarouselItem key={idx}>
 													<div className="aspect-video w-full overflow-hidden rounded-md bg-muted">
-														{/* eslint-disable-next-line @next/next/no-img-element */}
-														<img
-															src={shot.url}
-															alt={
-																shot.caption || `${title} screenshot ${idx + 1}`
-															}
-															loading="lazy"
-															className="h-full w-full object-cover"
-														/>
+														{renderMedia(shot, "h-full w-full object-cover")}
 													</div>
 													{shot.caption && (
 														<p className="mt-2 text-sm text-muted-foreground">

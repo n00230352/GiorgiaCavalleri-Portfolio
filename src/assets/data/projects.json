@@ -1,34 +1,103 @@
 [
-    {
-        "slug": "StepByStep",
-        "title": "StepByStep",
-        "description": "Step by Step is a promotional website that presents my UX design project by guiding users through its purpose, features, and design process. Built with Bootstrap and CSS.",
-        "screenshots": [
-            {
-                "url": "images/stepbystep.png",
-                "caption": "Screenshot of StepByStep"
-            }
-        ],
-        "url": "https://stepbystepg.netlify.app/",
-        "github": "https://github.com/n00230352/wed_design_framework_CA",
-        "date": "2024",
-        "tags": ["Bootstrap"]
-    },
-    {
-        "slug": "StepByStep",
-        "title": "StepByStep",
-        "description": "A UX design project for a mobile help-bot app that supports users in their daily lives through a conversational interface. Designed in Figma, with a focus on usability and user experience.",
-        "screenshots": [
-            {
-                "url": "images/stepByStepUx.png",
-                "caption": "Screenshot of screens in StepByStep App"
-            },
-            {
-                "url": "images/stepByStepUx2.png",
-                "caption": "Screenshot of screens in StepByStep App"
-            }
-        ],
-        "github": "",
-        "date": "2024"
-    }
+	{
+		"slug": "StepByStep",
+		"title": "StepByStep",
+		"description": "Step by Step is a promotional website that presents my UX design project by guiding users through its purpose, features, and design process. Built with Bootstrap and CSS.",
+		"screenshots": [
+			{
+				"url": "images/stepbystep.png",
+				"caption": "Screenshot of StepByStep"
+			}
+		],
+		"url": "https://stepbystepg.netlify.app/",
+		"github": "https://github.com/n00230352/wed_design_framework_CA",
+		"date": "2024",
+		"tags": ["Bootstrap"]
+	},
+	{
+		"slug": "StepByStep",
+		"title": "StepByStep",
+		"description": "A UX design project for a mobile help-bot app that supports users in their daily lives through a conversational interface. Designed in Figma, with a focus on usability and user experience.",
+		"screenshots": [
+			{
+				"url": "images/stepByStepUx.png",
+				"caption": "Screenshot of screens in StepByStep App"
+			},
+			{
+				"url": "images/stepByStepUx2.png",
+				"caption": "Screenshot of screens in StepByStep App"
+			}
+		],
+		"github": "",
+		"date": "2024"
+	},
+	{
+		"slug": "The echoes of the labyrinth",
+		"title": "The echoes of the labyrinth",
+		"description": "Echoes of the Labyrinth is a maze-based game experience developed in Unreal Engine, focused on player navigation, immersion, and atmospheric UX.",
+		"screenshots": [
+			{
+				"url": "images/The_echoes_of_the_labyrinth.png",
+				"caption": "Screenshot  of The echoes of the labyrinth"
+			},
+			{
+				"url": "images/the labyrinth game.mp4",
+				"caption": "Video of gameplay"
+			}
+		],
+		"github": "https://github.com/n00230352/theLabyrinth-CA2.git",
+		"date": "2025"
+	},
+	{
+		"slug": "DOC",
+		"title": "DOC",
+		"description": "DOC is a UX-focused medical centre website designed to make healthcare information clear and easy to access. The interface prioritises simplicity, accessibility, and trust, and was built using React and shadcn/ui.",
+		"screenshots": [
+			{
+				"url": "images/DOC.png",
+				"caption": "DOC"
+			},
+			{
+				"url": "images/DOC1.png",
+				"caption": "Screenshot of DOC"
+			},
+			{
+				"url": "images/DOC2.png",
+				"caption": "Screenshot of DOC"
+			},
+			{
+				"url": "images/DOC3.png",
+				"caption": "Screenshot of DOC"
+			},
+			{
+				"url": "images/DOC4.png",
+				"caption": "Screenshot of DOC"
+			}
+		],
+		"url": "https://medicalclinicca2.netlify.app/",
+		"github": "https://github.com/n00230352/MedicalClinic-CA2.git",
+		"date": "2025"
+	},
+	{
+		"slug": "World explorer",
+		"title": "World explorer",
+		"description": "World Explorer is a React web application designed to make country information easy to explore and understand. The interface focuses on usability and clarity, allowing users to view key details about each country through a simple and intuitive experience.",
+		"screenshots": [
+			{
+				"url": "images/worldlogo.png",
+				"caption": "World explorer"
+			},
+			{
+				"url": "images/world.png",
+				"caption": "Screenshot of World explorer"
+			},
+			{
+				"url": "images/world2.png",
+				"caption": "Screenshot of World explorer"
+			}
+		],
+		"url": "https://restcountries-ca1.netlify.app/",
+		"github": "https://github.com/n00230352/rest-countries-CA1.git",
+		"date": "2025"
+	}
 ]
