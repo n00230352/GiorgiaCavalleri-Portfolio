@@ -1,4 +1,14 @@
+import React, { useEffect, useState } from "react";
+
 export default function Intro() {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    // small timeout so the initial paint occurs before animation
+    const t = setTimeout(() => setLoaded(true), 50);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <header id="intro" className="min-h-screen flex items-center">
       <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16 w-full">
@@ -9,7 +19,11 @@ export default function Intro() {
               <img
                 src="/images/myself.jpg"
                 alt="Giorgia Cavalleri"
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transform transition-all duration-1000 ease-out will-change-transform ${
+                  loaded
+                    ? "scale-105 opacity-100 translate-y-0"
+                    : "scale-95 opacity-0 translate-y-4"
+                }`}
               />
             </div>
           </div>
