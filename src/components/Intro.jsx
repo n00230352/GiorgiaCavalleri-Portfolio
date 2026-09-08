@@ -1,75 +1,22 @@
-import React, { useEffect, useState } from "react";
-
-export default function Intro() {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    // small timeout so the initial paint occurs before animation
-    const t = setTimeout(() => setLoaded(true), 50);
-    return () => clearTimeout(t);
-  }, []);
-
+﻿export default function Intro() {
   return (
-    <header id="intro" className="min-h-screen flex items-center">
-      <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-16 w-full">
-        <div className="flex flex-col lg:flex-row items-center lg:items-center gap-10">
-          {/* Left: image */}
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
-            <div className="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 overflow-hidden shadow-lg">
-              <img
-                src="/images/myself.jpg"
-                alt="Giorgia Cavalleri"
-                className={`w-full h-full object-cover transform transition-all duration-1000 ease-out will-change-transform ${
-                  loaded
-                    ? "scale-105 opacity-100 translate-y-0"
-                    : "scale-95 opacity-0 translate-y-4"
-                }`}
-              />
-            </div>
-          </div>
-
-          {/* Right: content */}
-          <div className="w-full lg:w-1/2 space-y-6">
-            <div className="space-y-3 sm:space-y-2">
-              <div className="text-sm text-muted-foreground tracking-wider">
-                PORTFOLIO / 2025
-              </div>
-
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight">
-                Giorgia Cavalleri
-              </h1>
-            </div>
-
-            <div className="flex flex-col sm:flex-row sm:gap-8 gap-6">
-              <div className="space-y-3">
-                <div className="text-sm text-muted-foreground font-mono">CURRENTLY</div>
-                <div>
-                   <div className="text-foreground">Student <span className="text-muted-foreground">@ IADT</span></div>
-                   <div className="text-xs text-muted-foreground">2023 — Present</div>
-                </div>
-              </div>
-
-             
-            </div>
-
-            <div className="space-y-6 max-w-lg">
-              <p className="text-base sm:text-lg ">
-                I’m a Creative Computing student at IADT with a passion for UX design and experience in frontend development, interested in how design and technology come together to shape meaningful user experiences.
-              </p>
-
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  Open to work
-                </div>
-                <div>Dublin, Ireland</div>
-              </div>
-            </div>
-
-            
-          </div>
-        </div>
+    <section id="intro" className="hero wrap" aria-labelledby="intro-title">
+      <div className="hero-copy">
+        <p className="eyebrow">Creative computing · IADT</p>
+        <h2 id="intro-title">Giorgia<br /><em>Cavalleri</em></h2>
+        <p className="hero-role">UX design &amp;<br />frontend development</p>
+        <span className="gold-rule" aria-hidden="true" />
+        <p className="hero-description">I’m a Creative Computing student with a passion for UX design. I bring design and technology together to create thoughtful, meaningful digital experiences.</p>
+        <a className="text-link" href="#projects">Explore my work <span aria-hidden="true">↗</span></a>
+        <p className="availability"><span aria-hidden="true" />Open to work &amp; new ideas</p>
       </div>
-    </header>
+      <div className="hero-visual">
+        <div className="portrait-frame"><img src="/images/myself.jpg" alt="Giorgia Cavalleri" loading="lazy" /></div>
+        <div className="portrait-stamp" aria-label="Design with purpose"><span>DESIGN WITH PURPOSE</span><b aria-hidden="true">G<span>✦</span></b><span>CREATE WITH CURIOSITY</span></div>
+        <p className="portrait-caption"><span>Thoughtful by design.</span><span>01 / INTRODUCTION</span></p>
+      </div>
+    </section>
   );
 }
+
+

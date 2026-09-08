@@ -1,245 +1,143 @@
-import React from "react";
-import {
-	Card,
-	CardHeader,
-	CardTitle,
-	CardDescription,
-	CardContent,
-	CardFooter,
-} from "@/components/ui/card";
+﻿import { useEffect, useRef, useState } from 'react';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import useEmblaCarousel from 'embla-carousel-react';
 
-import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogDescription,
-	DialogFooter,
-	DialogTrigger,
-	DialogClose,
-} from "@/components/ui/dialog";
-import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Badge } from "@/components/ui/badge";
+const categories = ['Web design · Development', 'UX / UI design · Mobile app', 'Game design · Unreal Engine', 'UX / UI design · React', 'Web development · React'];
 
-// Contract:
-// props.project: {
-//   slug, title, description, screenshots[{url,caption}], url, github, date, tags[]
-// }
-// Renders a card with screenshot, title, description, tags, and action links.
+function ExpandableMedia({ shot, title, shots, shotIndex }) {
+  const [largeIndex, setLargeIndex] = useState(shotIndex);
+  const touchStart = useRef(null);
+  const largeShot = shots[largeIndex];
+  const largeSrc = encodeURI('/' + largeShot.url.replace(/^\//, ''));
+  const largeIsVideo = /\.(mp4|webm|ogg)(?:\?.*)?$/i.test(largeShot.url);
+  const move = (direction) => setLargeIndex(current => Math.max(0, Math.min(shots.length - 1, current + direction)));
+  const videoRef = useRef(null);
+  const playbackTime = useRef(0);
+  const src = encodeURI('/' + shot.url.replace(/^\//, ''));
+  const isVideo = /\.(mp4|webm|ogg)(?:\?.*)?$/i.test(shot.url);
+  const label = shot.caption || title;
 
-export function ProjectCard({ project }) {
-	const {
-		title,
-		description,
-		screenshots = [],
-		url,
-		github,
-		tags = [],
-		date,
-	} = project;
-	const screenshot = screenshots[0];
-	const year = date ? /(\d{4})/.exec(String(date))?.[0] || String(date) : null;
-	// show full description on the card (no truncation)
-	const truncate = (str) => str;
+  const onOpenChange = (open) => {
+    if (open) setLargeIndex(shotIndex);
+    if (open && videoRef.current) {
+      playbackTime.current = videoRef.current.currentTime;
+      videoRef.current.pause();
+    }
+  };
 
-	const isVideoFile = (u) => typeof u === "string" && /\.(mp4|webm|ogg)(?:\?.*)?$/i.test(u);
-	const isYouTube = (u) => typeof u === "string" && /(?:youtube\.com|youtu\.be)/i.test(u);
-	const isVimeo = (u) => typeof u === "string" && /vimeo\.com/.test(u);
+  return (
+    <Dialog onOpenChange={onOpenChange}>
+      {isVideo ? (
+        <div className="relative">
+          <video ref={videoRef} className="aspect-[16/10] w-full object-contain" src={src} controls playsInline preload="metadata" aria-label={label} />
+          <DialogTrigger className="absolute top-3 right-3 border border-black bg-white px-3 py-2 text-xs text-black" aria-label={`Expand video: ${label}`}>Expand ↗</DialogTrigger>
+        </div>
+      ) : (
+        <DialogTrigger className="group relative block w-full cursor-zoom-in" aria-label={`Expand image: ${label}`}>
+          <img className="aspect-[16/10] w-full object-contain" src={src} alt={label} loading="lazy" />
+          <span className="absolute right-3 bottom-3 border border-black bg-white px-2 py-1 text-xs text-black" aria-hidden="true">↗</span>
+        </DialogTrigger>
+      )}
+      <DialogContent className="w-[calc(100%-2rem)] max-w-[1200px] sm:max-w-[1200px] max-h-[92dvh] overflow-y-auto rounded-none border-black bg-white p-4 pt-12 text-[#292a26] sm:p-6 sm:pt-12" aria-describedby={undefined} onKeyDown={(event) => {
+        if (event.target.tagName === 'VIDEO') return;
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          move(event.key === 'ArrowLeft' ? -1 : 1);
+        }
+      }}>
+        <DialogTitle className="sr-only">{title}: {largeShot.caption || 'Project media'}</DialogTitle>
+        <div className="flex h-[60dvh] items-center justify-center" onTouchStart={(event) => {
+          touchStart.current = largeIsVideo ? null : { x: event.touches[0].clientX, y: event.touches[0].clientY };
+        }} onTouchEnd={(event) => {
+          const start = touchStart.current;
+          touchStart.current = null;
+          if (!start) return;
+          const dx = event.changedTouches[0].clientX - start.x;
+          const dy = event.changedTouches[0].clientY - start.y;
+          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) move(dx < 0 ? 1 : -1);
+        }}>
+          {largeIsVideo
+            ? <video key={largeSrc} className="max-h-full w-full object-contain" src={largeSrc} controls playsInline preload="metadata" aria-label={largeShot.caption || title} onLoadedMetadata={(event) => { if (largeIndex === shotIndex) event.currentTarget.currentTime = playbackTime.current; }} />
+            : <img className="max-h-full w-full object-contain" src={largeSrc} alt={largeShot.caption || title} />}
+        </div>
+        {shots.length > 1 && (
+          <div className="flex items-center justify-between gap-4 border-t border-black/15 pt-3">
+            <button type="button" className="px-3 py-2 text-sm disabled:opacity-25" disabled={largeIndex === 0} onClick={() => move(-1)} aria-label="Previous enlarged image">← Previous</button>
+            <span className="text-xs" aria-live="polite">{largeIndex + 1} / {shots.length}</span>
+            <button type="button" className="px-3 py-2 text-sm disabled:opacity-25" disabled={largeIndex === shots.length - 1} onClick={() => move(1)} aria-label="Next enlarged image">Next →</button>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+function ProjectGallery({ project }) {
+  const shots = project.screenshots || [];
+  const [viewportRef, api] = useEmblaCarousel({ loop: false });
+  const [selected, setSelected] = useState(0);
 
-	const toYouTubeEmbed = (u) => {
-		if (!u) return u;
-		const vid = (u.match(/[?&]v=([A-Za-z0-9_-]{6,})/) || u.match(/youtu\.be\/([A-Za-z0-9_-]{6,})/))?.[1];
-		return vid ? `https://www.youtube.com/embed/${vid}` : u;
-	};
+  useEffect(() => {
+    if (!api) return;
+    const onSelect = () => {
+      setSelected(api.selectedScrollSnap());
+      api.slideNodes().forEach((slide) => {
+        slide.querySelectorAll('video').forEach((video) => video.pause());
+      });
+    };
+    api.on('select', onSelect);
+    api.on('reInit', onSelect);
+    return () => {
+      api.off('select', onSelect);
+      api.off('reInit', onSelect);
+    };
+  }, [api]);
 
-	const renderMedia = (shot, className = "h-full w-full object-cover") => {
-		if (!shot || !shot.url) return null;
-		const raw = shot.url;
-		const src = encodeURI(raw);
+  return (
+    <div role="region" aria-roledescription="carousel" aria-label={`${project.title} images`}>
+      <div ref={viewportRef} className="overflow-hidden border border-black bg-[#f5f4f0]">
+        <div className="flex touch-pan-y">
+          {shots.map((shot, shotIndex) => {
 
-		if (isVideoFile(raw)) {
-			return (
-				<video controls preload="metadata" className={className} playsInline>
-					<source src={src} />
-					Your browser does not support the video tag.
-				</video>
-			);
-		}
-
-		if (isYouTube(raw)) {
-			const embed = toYouTubeEmbed(raw);
-			return (
-				<iframe
-					src={embed}
-					title={shot.caption || title}
-					className={className}
-					frameBorder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowFullScreen
-				/>
-			);
-		}
-
-		if (isVimeo(raw)) {
-			const id = raw.split('/').pop();
-			const embed = raw.includes('player.vimeo') ? raw : `https://player.vimeo.com/video/${id}`;
-			return (
-				<iframe src={embed} title={shot.caption || title} className={className} frameBorder="0" allowFullScreen />
-			);
-		}
-
-		// fallback to image
-		return (
-			// eslint-disable-next-line @next/next/no-img-element
-			<img src={src} alt={shot.caption || `${title} screenshot`} loading="lazy" className={className} />
-		);
-	};
-
-	return (
-		<Card className="flex flex-col h-full overflow-hidden rounded-md shadow-sm hover:shadow-lg transition-shadow transform hover:-translate-y-1 p-0 mb-6">
-			<div className="relative aspect-video w-full overflow-hidden rounded-t-md bg-muted">
-				{screenshot?.url ? (
-					<div className="h-full w-full transition-transform duration-300 hover:scale-105">
-						{renderMedia(screenshot, "h-full w-full object-cover")}
-					</div>
-				) : (
-					<div className="h-full w-full flex items-center justify-center bg-gray-100 text-gray-700">
-						<div className="text-center">
-							<div className="text-lg font-semibold">{title}</div>
-							{year && <div className="text-sm mt-1">{year}</div>}
-						</div>
-					</div>
-				)}
-			</div>
-
-			<CardHeader className="px-4 pt-3">
-				<div className="flex items-start justify-between w-full">
-					<CardTitle className="text-lg font-semibold">
-						{url && url.trim() !== "" ? (
-							<a
-								href={url}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="hover:underline"
-							>
-								{title}
-							</a>
-						) : (
-							title
-						)}
-					</CardTitle>
-					{year && <div className="text-sm text-muted-foreground">{year}</div>}
-				</div>
-			</CardHeader>
-
-			<CardContent className="px-4 pb-0 flex-1">
-				{description && (
-					<p className="text-sm text-muted-foreground mt-2">{description}</p>
-				)}
-			</CardContent>
-			<CardFooter className="mt-auto flex gap-3 px-4 pt-2 pb-4">
-				{url && url.trim() !== "" && (
-					<Button asChild variant="ghost" size="sm">
-						<a
-							href={url}
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label={`Open live site for ${title}`}
-							className="text-sm font-medium"
-						>
-							Live Site
-						</a>
-					</Button>
-				)}
-				{/* GitHub link intentionally omitted from closed card; available inside dialog only */}
-
-				<Dialog>
-					<DialogTrigger asChild>
-						<Button
-							size="sm"
-							variant="outline"
-							className="cursor-pointer ml-auto"
-						>
-							View More
-						</Button>
-					</DialogTrigger>
-					<DialogContent className="max-w-[95vw] sm:max-w-3xl lg:max-w-5xl p-0 overflow-hidden">
-						<DialogHeader className="px-6 pt-6">
-							<DialogTitle className="text-2xl md:text-3xl font-bold">
-								{title}
-							</DialogTitle>
-							{date && (
-								<div className="text-sm text-muted-foreground">{date}</div>
-							)}
-						</DialogHeader>
-						<div className="px-6 pb-6">
-							{screenshots?.length > 0 ? (
-								<div className="relative">
-									<Carousel className="w-full">
-										<CarouselContent>
-											{screenshots.map((shot, idx) => (
-												<CarouselItem key={idx}>
-													<div className="aspect-video w-full overflow-hidden rounded-md bg-muted">
-														{renderMedia(shot, "h-full w-full object-cover")}
-													</div>
-													{shot.caption && (
-														<p className="mt-2 text-sm text-muted-foreground">
-															{shot.caption}
-														</p>
-													)}
-												</CarouselItem>
-											))}
-										</CarouselContent>
-										{screenshots?.length > 1 && (
-											<>
-												<CarouselPrevious className="left-2" />
-												<CarouselNext className="right-2" />
-											</>
-										)}
-									</Carousel>
-								</div>
-							) : (
-								<div className="aspect-video w-full rounded-md bg-muted flex items-center justify-center text-muted-foreground">
-									No screenshots available
-								</div>
-							)}
-
-							<div className="mt-4 text-sm text-muted-foreground">
-								{description}
-							</div>
-
-							<DialogFooter className="mt-6 flex gap-3">
-								{url && (
-									<Button asChild>
-										<a href={url} target="_blank" rel="noopener noreferrer">
-											Live Site
-										</a>
-									</Button>
-								)}
-								{github && github.trim() !== "" && (
-									<Button variant="secondary" asChild>
-										<a href={github} target="_blank" rel="noopener noreferrer">
-											GitHub
-										</a>
-									</Button>
-								)}
-								<DialogClose asChild>
-									<Button variant="outline">Close</Button>
-								</DialogClose>
-							</DialogFooter>
-						</div>
-					</DialogContent>
-				</Dialog>
-			</CardFooter>
-		</Card>
-	);
+            return (
+              <div key={shot.url} className="min-w-0 flex-[0_0_100%]" role="group" aria-roledescription="slide" aria-label={`${shotIndex + 1} of ${shots.length}`} inert={shotIndex !== selected}>
+                <ExpandableMedia shot={shot} title={project.title} shots={shots} shotIndex={shotIndex} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      {shots.length > 1 && (
+        <div className="mt-3 flex items-center justify-between gap-4">
+          <button type="button" onClick={() => api?.scrollPrev()} disabled={selected === 0} className="px-2 py-1 text-xl disabled:opacity-25" aria-label={`Previous image for ${project.title}`}>←</button>
+          <div className="flex flex-wrap justify-center" aria-label="Choose an image">
+            {shots.map((shot, shotIndex) => <button key={shot.url} type="button" className="grid size-7 place-items-center" onClick={() => api?.scrollTo(shotIndex)} aria-label={`Show image ${shotIndex + 1} for ${project.title}`} aria-current={selected === shotIndex ? 'true' : undefined}><span className={`size-1.5 rounded-full ${selected === shotIndex ? 'bg-black' : 'bg-black/20'}`} /></button>)}
+          </div>
+          <button type="button" onClick={() => api?.scrollNext()} disabled={selected === shots.length - 1} className="px-2 py-1 text-xl disabled:opacity-25" aria-label={`Next image for ${project.title}`}>→</button>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default ProjectCard;
+export default function ProjectCard({ project, index = 0 }) {
+  const github = project.github?.trim();
+  const liveUrl = project.url?.trim();
+  return (
+    <article className="grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-[8%]">
+      <div className={index % 2 === 0 ? 'md:col-start-1 md:row-start-1' : 'md:col-start-2 md:row-start-1'}>
+        <p className="mb-3 text-[10px] tracking-[0.12em] text-[#71695c] uppercase">{categories[index]}</p>
+        <h3 className="mb-4 text-2xl leading-tight font-bold tracking-[-0.035em] uppercase sm:text-3xl">{project.title}</h3>
+        <p className="max-w-lg text-sm leading-[1.85] text-[#605a51] sm:text-base">{project.description}</p>
+        {(github || liveUrl) && (
+          <div className="mt-5 flex w-fit flex-wrap gap-7 border-b border-[#292a26]/40 pb-2 text-[10px] tracking-[0.12em] uppercase">
+            {github && <a href={github} target="_blank" rel="noopener noreferrer" aria-label={`GitHub for ${project.title}`}>GitHub ↗</a>}
+            {liveUrl && <a href={liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`Live site for ${project.title}`}>Live Site ↗</a>}
+          </div>
+        )}
+      </div>
+      <div className={`min-w-0 ${index % 2 === 0 ? 'md:col-start-2 md:row-start-1' : 'md:col-start-1 md:row-start-1'}`}>
+        <ProjectGallery project={project} />
+      </div>
+    </article>
+  );
+}
